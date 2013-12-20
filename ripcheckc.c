@@ -52,6 +52,9 @@ void dumpwave(FILE *f, char* fn)
     signed int i, x, x1 = 0, x2 = 0, x3 = 0, x4 = 0, x5 = 0, x6 = 0, channels, bits = 0;
     signed int dupecount = 0;
     unsigned long millisecs = 0;
+    int seconds = millisecs / 1000.0;
+    int minutes = seconds / 60.0;
+    int hours = minutes / 60.0;
     unsigned long len;
     unsigned long sample = 0;
     unsigned long count;
@@ -158,8 +161,11 @@ void dumpwave(FILE *f, char* fn)
 
             /* look for a pop */
             if (x6 == 0 && x5 == 0 && x4 == 0 && x3 == 0 && (x2 > 10000 || x2 < -10000) && count > 12 && (millisecs < almost_end)) {
-                printf("- possible pop found at sample count %lu (%lu millisecs) values: '%i, %i, %i, %i, %i, %i, %i' %s\n",
-                    sample, millisecs, x6, x5, x4, x3, x2, x1, x, fn);
+                seconds = millisecs / 1000.0;
+                minutes = seconds / 60.0;
+                hours = minutes / 60.0;
+                printf("- possible pop found at sample count %lu (%i:%i:%i) values: '%i, %i, %i, %i, %i, %i, %i' %s\n",
+                    sample, hours, minutes, seconds, x6, x5, x4, x3, x2, x1, x, fn);
                 bad_areas++;
                 poploc = x;
             }
@@ -167,8 +173,11 @@ void dumpwave(FILE *f, char* fn)
             /* look for a dropped sample, but not closer than 8 samples to the previous pop */
             if ( ((x2 > 20000 && x1 == 0 && x > 20000) || (x2 < -20000 && x1 == 0 && x < -20000)) &&
                  count > 12 && (count > poploc + 8) && (millisecs < almost_end)) {
-                printf("- possible dropped sample found at sample count %lu (%lu millisecs) values: '%i, %i, %i' %s\n",
-                    sample, millisecs, x2, x1, x, fn);
+                seconds = millisecs / 1000.0;
+                minutes = seconds / 60.0;
+                hours = minutes / 60.0;
+                printf("- possible dropped sample found at sample count %lu (%i:%i:%i) values: '%i, %i, %i' %s\n",
+                    sample, hours, minutes, seconds, x2, x1, x, fn);
                 poploc = x;
                 bad_areas++;
             }
@@ -182,8 +191,11 @@ void dumpwave(FILE *f, char* fn)
                     } else if (x > 0 && x < 10) {
                         /* do nothing */
                     } else {
-                        printf("- %d dupes found at sample count %lu (%lu millisecs) value='%i' %s\n",
-                            dupecount, sample, millisecs, x, fn);
+                        seconds = millisecs / 1000.0;
+                        minutes = seconds / 60.0;
+                        hours = minutes / 60.0;
+                        printf("- %d dupes found at sample count %lu (%.2i:%.2i:%.2i) value='%i' %s\n",
+                               dupecount, sample, hours, minutes, seconds, x, fn);
                         bad_areas++;
                         prevbadspot = millisecs;
                     }
