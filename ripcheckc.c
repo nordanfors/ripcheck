@@ -164,7 +164,7 @@ void dumpwave(FILE *f, char* fn)
                 seconds = millisecs / 1000.0;
                 minutes = seconds / 60.0;
                 hours = minutes / 60.0;
-                printf("- possible pop found at sample count %lu (%i:%i:%i) values: '%i, %i, %i, %i, %i, %i, %i' %s\n",
+                printf("- possible pop found at sample count %lu (%.2i:%.2i:%.2i) values: '%i, %i, %i, %i, %i, %i, %i' %s\n",
                     sample, hours, minutes, seconds, x6, x5, x4, x3, x2, x1, x, fn);
                 bad_areas++;
                 poploc = x;
@@ -176,7 +176,7 @@ void dumpwave(FILE *f, char* fn)
                 seconds = millisecs / 1000.0;
                 minutes = seconds / 60.0;
                 hours = minutes / 60.0;
-                printf("- possible dropped sample found at sample count %lu (%i:%i:%i) values: '%i, %i, %i' %s\n",
+                printf("- possible dropped sample found at sample count %lu (%.2i:%.2i:%.2i) values: '%i, %i, %i' %s\n",
                     sample, hours, minutes, seconds, x2, x1, x, fn);
                 poploc = x;
                 bad_areas++;
